@@ -73,7 +73,7 @@ function Register() {
   const styles = {
     container: {
       maxWidth: '600px',
-      margin: '40px auto',
+      margin: '0px auto',
       backgroundColor: modoOscuro ? '#1e1e1e' : `${colorPrimario}22`,
       padding: '40px',
       borderRadius: '20px',
