@@ -29,7 +29,7 @@ function Login() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const res = await axios.post('http://localhost:8000/api/auth/login', form);
+      const res = await axios.post('https://mi-app-backend-osut.onrender.com/api/auth/login', form);
       localStorage.setItem('userId', res.data.user.id);
       navigate('/perfil');
     } catch (err) {

@@ -21,7 +21,7 @@ function Hermandad() {
     const cargarCumples = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/auth/hermandad?filtro=mes&mes=${mesSeleccionado}`
+          `https://mi-app-backend-osut.onrender.com/api/auth/hermandad?filtro=mes&mes=${mesSeleccionado}`
         );
         
         // Ordenar por día del mes

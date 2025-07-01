@@ -35,7 +35,7 @@ function Configuracion() {
 
   const confirmarEliminarCuenta = () => {
     const userId = localStorage.getItem('userId');
-    fetch(`http://localhost:8000/api/auth/profile/${userId}`, {
+    fetch(`https://mi-app-backend-osut.onrender.com/api/auth/profile/${userId}`, {
       method: 'DELETE'
     })
       .then(() => {

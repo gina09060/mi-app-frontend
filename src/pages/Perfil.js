@@ -33,7 +33,7 @@ function Perfil() {
   const { modoOscuro, colorPrimario } = useContext(ThemeContext);
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/auth/profile/${userId}`)
+    axios.get(`https://mi-app-backend-osut.onrender.com/api/auth/profile/${userId}`)
       .then(res => {
         const data = res.data;
         const fechaISO = new Date(data.birthday).toISOString().split('T')[0];
@@ -66,7 +66,7 @@ function Perfil() {
     const formData = new FormData();
     for (const key in form) formData.append(key, form[key]);
     try {
-      await axios.put(`http://localhost:8000/api/auth/profile/${userId}`, formData, {
+      await axios.put(`https://mi-app-backend-osut.onrender.com/api/auth/profile/${userId}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setSuccessMessage("Perfil actualizado correctamente");
