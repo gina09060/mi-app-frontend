@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { FaUser, FaUsers, FaCog } from 'react-icons/fa';
+import { FaUser} from 'react-icons/fa';
 import { IoMdSettings } from 'react-icons/io';
 import { BsPeopleFill } from 'react-icons/bs';
 import { useContext } from 'react';
