@@ -181,7 +181,6 @@ function Register() {
       flex: 1,
       padding: '15px',
       borderRadius: '12px',
-      border: 'none',
       backgroundColor: modoOscuro ? '#333' : '#f9f9f9',
       color: modoOscuro ? '#f5f5f5' : '#333',
       minHeight: '100px',
