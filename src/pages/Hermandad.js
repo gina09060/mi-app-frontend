@@ -2,8 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { ThemeContext } from '../ThemeContext';
 import { 
-  FaBirthdayCake, 
-  FaCalendarAlt,
+  FaBirthdayCake,
   FaUserCircle,
   FaGift,
   FaSearch
