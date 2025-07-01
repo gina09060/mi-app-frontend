@@ -7,7 +7,6 @@ import {
   FaSun, 
   FaSignOutAlt, 
   FaTrashAlt,
-  FaPalette,
   FaTimes,
   FaCheck
 } from 'react-icons/fa';

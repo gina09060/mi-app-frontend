@@ -14,7 +14,6 @@ import {
   FaLock,
   FaUserPlus
 } from 'react-icons/fa';
-import { IoMdPerson } from 'react-icons/io';
 import { RiLockPasswordLine } from 'react-icons/ri';
 
 function Register() {
