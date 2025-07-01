@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+:root {
+  --color-fondo: #e6f9ec;         /* Verde clarito */
+  --color-primario: #3CB371;      /* Verde fuerte (editable por el usuario) */
+  --color-botones: #2ecc71;
+  --color-bordes: #b4e2c8;
+}
