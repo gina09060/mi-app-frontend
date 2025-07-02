@@ -1,15 +1,6 @@
 import { useContext, useState } from 'react';
 import { ThemeContext } from '../ThemeContext';
-import { useNavigate } from 'react-router-dom';
-import { 
-  FaCog, 
-  FaMoon, 
-  FaSun, 
-  FaSignOutAlt, 
-  FaTrashAlt,
-  FaTimes,
-  FaCheck
-} from 'react-icons/fa';
+import { FaCog, FaMoon, FaSun, FaSignOutAlt, FaTrashAlt, FaTimes, FaCheck } from 'react-icons/fa';
 import { MdColorLens } from 'react-icons/md';
 import { motion } from 'framer-motion';
 
@@ -17,8 +8,7 @@ function Configuracion() {
   const { modoOscuro, setModoOscuro, colorPrimario, setColorPrimario } = useContext(ThemeContext);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const navigate = useNavigate();
-
+  
   const cerrarSesion = () => {
     setShowLogoutDialog(true);
   };
@@ -26,7 +16,7 @@ function Configuracion() {
   const confirmarCerrarSesion = () => {
     localStorage.removeItem('userId');
     setShowLogoutDialog(false);
-    navigate('/');
+    window.location.href = '/';
   };
 
   const eliminarCuenta = () => {
@@ -35,13 +25,11 @@ function Configuracion() {
 
   const confirmarEliminarCuenta = () => {
     const userId = localStorage.getItem('userId');
-    fetch(`https://mi-app-backend-qhy3.onrender.com/api/auth/profile/${userId}`, {
-      method: 'DELETE'
-    })
+    fetch(`http://cumple.ultrainf.com/api/users/${userId}`, { method: 'DELETE' })
       .then(() => {
         localStorage.removeItem('userId');
         setShowDeleteDialog(false);
-        navigate('/');
+        window.location.href = '/';
       })
       .catch(() => alert("Error al eliminar cuenta"));
   };
