@@ -5,7 +5,7 @@ import { FaUserAlt, FaPhoneAlt, FaMapMarkerAlt, FaBirthdayCake, FaCamera, FaSave
 import { RiLockPasswordLine } from 'react-icons/ri';
 
 function Perfil() {
-  const userId = localStorage.getItem('userId');
+  const usersId = localStorage.getItem('usersId');
   const [form, setForm] = useState({});
   const [photoPreview, setPhotoPreview] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
@@ -13,7 +13,7 @@ function Perfil() {
   const { modoOscuro, colorPrimario } = useContext(ThemeContext);
 
   useEffect(() => {
-    axios.get(`http://cumple.ultrainf.com/api/users/${userId}`)
+    axios.get(`http://cumple.ultrainf.com/api/usuarios/${usersId}`)
       .then(res => {
         const data = res.data;
         const fechaISO = new Date(data.birthday).toISOString().split('T')[0];
@@ -26,7 +26,7 @@ function Perfil() {
         }
       })
       .catch(() => alert("Error al cargar perfil"));
-  }, [userId]);
+  }, [usersId]);
 
   const handleChange = e => {
     const { name, value, files } = e.target;
