@@ -57,7 +57,7 @@ function Register() {
     }
 
     try {
-      await axios.post('https://mi-app-backend-osut.onrender.com/api/auth/register', formData, {
+      await axios.post('https://mi-app-backend-qhy3.onrender.com/api/auth/register', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       alert('Registro exitoso. Por favor inicia sesión.');
