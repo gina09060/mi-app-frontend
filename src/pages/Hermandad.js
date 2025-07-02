@@ -1,22 +1,29 @@
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { ThemeContext } from '../ThemeContext';
-import { FaBirthdayCake, FaUserCircle, FaGift, FaSearch } from 'react-icons/fa';
+import { 
+  FaBirthdayCake,
+  FaUserCircle,
+  FaGift,
+  FaSearch
+} from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function Hermandad() {
   const [cumples, setCumples] = useState([]);
   const [mesSeleccionado, setMesSeleccionado] = useState(new Date().getMonth() + 1);
   const [searchTerm, setSearchTerm] = useState('');
+  const [error, setError] = useState(null);
   const { modoOscuro, colorPrimario } = useContext(ThemeContext);
 
   useEffect(() => {
     const cargarCumples = async () => {
       try {
         const response = await axios.get(
-          `http://cumple.ultrainf.com/api/hermandad?filtro=mes&mes=${mesSeleccionado}`
+          `https://mi-app-backend-qhy3.onrender.com/api/auth/hermandad?filtro=mes&mes=${mesSeleccionado}`
         );
         
+        // Ordenar por día del mes
         const sortedResults = response.data.sort((a, b) => {
           const dateA = new Date(a.birthday);
           const dateB = new Date(b.birthday);
@@ -24,8 +31,11 @@ function Hermandad() {
         });
 
         setCumples(sortedResults);
+        setError(null);
       } catch (err) {
         console.error("Error al cargar cumpleaños:", err);
+        setError("Error al cargar los cumpleaños. Por favor intenta nuevamente.");
+        setCumples([]);
       }
     };
 
@@ -46,7 +56,8 @@ function Hermandad() {
   );
 
   const meses = [
-    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
   ];
 
   const styles = {
@@ -231,47 +242,64 @@ function Hermandad() {
         </select>
       </div>
 
-      <AnimatePresence>
-        {filteredCumples.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            style={styles.emptyState}
-          >
-            <FaGift style={styles.emptyIcon} />
-            <p>No hay cumpleaños registrados en este mes</p>
-          </motion.div>
-        ) : (
-          filteredCumples.map(user => (
+      {error && (
+        <div style={styles.errorMessage}>
+          {error}
+        </div>
+      )}
+
+      <div style={styles.cardContainer}>
+        <AnimatePresence>
+          {filteredCumples.length === 0 ? (
             <motion.div
-              key={user.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              style={styles.card}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={styles.emptyState}
             >
-              <img
-                src={user.photo || "https://via.placeholder.com/80?text=Sin+Foto"}
-                alt="Foto de perfil"
-                style={styles.photo}
-              />
-              <div style={styles.userInfo}>
-                <div style={styles.name}>
-                  <FaUserCircle /> {user.name} {user.lastname}
-                </div>
-                <div style={styles.date}>
-                  <FaBirthdayCake /> 
-                  {new Date(user.birthday).toLocaleDateString('es-ES', { 
-                    day: 'numeric', 
-                    month: 'long' 
-                  })} - Cumple {calcularEdad(user.birthday)} años
-                </div>
-              </div>
+              <FaGift style={styles.emptyIcon} />
+              <p>
+                {searchTerm 
+                  ? `No se encontraron cumpleañeros que coincidan con "${searchTerm}"`
+                  : `No hay cumpleaños registrados en ${meses[mesSeleccionado - 1]}`}
+              </p>
             </motion.div>
-          ))
-        )}
-      </AnimatePresence>
+          ) : (
+            filteredCumples.map(user => (
+              <motion.div
+                key={user.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                style={styles.card}
+              >
+                <img
+                  src={user.photo
+                    ? `data:image/jpeg;base64,${btoa(
+                        new Uint8Array(user.photo.data).reduce((data, byte) => data + String.fromCharCode(byte), '')
+                      )}`
+                    : 'https://via.placeholder.com/80?text=Sin+Foto'}
+                  alt="Foto de perfil"
+                  style={styles.photo}
+                />
+                <div style={styles.userInfo}>
+                  <div style={styles.name}>
+                    <FaUserCircle /> {user.name} {user.lastname}
+                  </div>
+                  <div style={styles.date}>
+                    <FaBirthdayCake /> 
+                    {new Date(user.birthday).toLocaleDateString('es-ES', { 
+                      day: 'numeric', 
+                      month: 'long' 
+                    })} - Cumple {calcularEdad(user.birthday)} años
+                  </div>
+                </div>
+              </motion.div>
+            ))
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }
