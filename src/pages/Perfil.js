@@ -1,28 +1,8 @@
 import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { ThemeContext } from '../ThemeContext';
-import { 
-  FaUserAlt, 
-  FaPhoneAlt, 
-  FaMapMarkerAlt, 
-  FaBirthdayCake, 
-  FaCamera, 
-  FaSave,
-  FaEnvelope,
-  FaInfoCircle,
-  FaCheckCircle
-} from 'react-icons/fa';
-import { IoMdPerson } from 'react-icons/io';
+import { FaUserAlt, FaPhoneAlt, FaMapMarkerAlt, FaBirthdayCake, FaCamera, FaSave, FaEnvelope, FaInfoCircle, FaCheckCircle } from 'react-icons/fa';
 import { RiLockPasswordLine } from 'react-icons/ri';
-
-function calcularEdad(fechaNacimiento) {
-  const hoy = new Date();
-  const cumple = new Date(fechaNacimiento);
-  let edad = hoy.getFullYear() - cumple.getFullYear();
-  const m = hoy.getMonth() - cumple.getMonth();
-  if (m < 0 || (m === 0 && hoy.getDate() < cumple.getDate())) edad--;
-  return edad;
-}
 
 function Perfil() {
   const userId = localStorage.getItem('userId');
@@ -33,7 +13,7 @@ function Perfil() {
   const { modoOscuro, colorPrimario } = useContext(ThemeContext);
 
   useEffect(() => {
-    axios.get(`https://mi-app-backend-qhy3.onrender.com/api/auth/profile/${userId}`)
+    axios.get(`http://cumple.ultrainf.com/api/users/${userId}`)
       .then(res => {
         const data = res.data;
         const fechaISO = new Date(data.birthday).toISOString().split('T')[0];
@@ -66,7 +46,7 @@ function Perfil() {
     const formData = new FormData();
     for (const key in form) formData.append(key, form[key]);
     try {
-      await axios.put(`https://mi-app-backend-qhy3.onrender.com/api/auth/profile/${userId}`, formData, {
+      await axios.put(`http://cumple.ultrainf.com/api/users/${userId}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setSuccessMessage("Perfil actualizado correctamente");
@@ -204,29 +184,6 @@ function Perfil() {
         color: modoOscuro ? '#777' : '#999'
       }
     },
-    textarea: {
-      flex: 1,
-      padding: '15px',
-      borderRadius: '12px',
-      backgroundColor: modoOscuro ? '#333' : '#f9f9f9',
-      color: modoOscuro ? '#f5f5f5' : '#333',
-      minHeight: '100px',
-      fontSize: '16px',
-      outline: 'none',
-      resize: 'vertical',
-      border: `1px solid ${modoOscuro ? '#444' : '#e0e0e0'}`,
-      '&:focus': {
-        borderColor: colorPrimario,
-        boxShadow: `0 0 0 3px ${colorPrimario}33`
-      },
-      '&:disabled': {
-        backgroundColor: modoOscuro ? '#333' : '#f9f9f9',
-        color: modoOscuro ? '#aaa' : '#666'
-      },
-      '&::placeholder': {
-        color: modoOscuro ? '#777' : '#999'
-      }
-    },
     buttonGroup: {
       display: 'flex',
       justifyContent: 'center',
@@ -322,7 +279,7 @@ function Perfil() {
       
       <div style={styles.header}>
         <h2 style={styles.title}>
-          <IoMdPerson /> Mi Perfil
+          <FaUserAlt /> Mi Perfil
         </h2>
         <button 
           style={styles.editButton} 
@@ -402,18 +359,6 @@ function Perfil() {
             placeholder="Correo electrónico" 
             style={styles.input} 
             disabled={!isEditing}
-          />
-        </div>
-
-        <div style={styles.inputGroup}>
-          <FaUserAlt style={styles.icon} />
-          <input 
-            name="age" 
-            value={form.age ? `${form.age} años` : ''} 
-            readOnly 
-            style={{ ...styles.input, color: modoOscuro ? '#aaa' : '#666' }} 
-            placeholder="Edad (calculada automáticamente)"
-            disabled
           />
         </div>
 
