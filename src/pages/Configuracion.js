@@ -14,7 +14,7 @@ function Configuracion() {
   };
 
   const confirmarCerrarSesion = () => {
-    localStorage.removeItem('userId');
+    localStorage.removeItem('usersId');
     setShowLogoutDialog(false);
     window.location.href = '/';
   };
@@ -24,10 +24,10 @@ function Configuracion() {
   };
 
   const confirmarEliminarCuenta = () => {
-    const userId = localStorage.getItem('userId');
-    fetch(`http://cumple.ultrainf.com/api/users/${userId}`, { method: 'DELETE' })
+    const userssId = localStorage.getItem('usersId');
+    fetch(`http://cumple.ultrainf.com/api/usuarios/${usersId}`, { method: 'DELETE' })
       .then(() => {
-        localStorage.removeItem('userId');
+        localStorage.removeItem('usersId');
         setShowDeleteDialog(false);
         window.location.href = '/';
       })
