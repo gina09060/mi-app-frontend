@@ -46,7 +46,7 @@ function Perfil() {
     const formData = new FormData();
     for (const key in form) formData.append(key, form[key]);
     try {
-      await axios.put(`http://cumple.ultrainf.com/api/users/${userId}`, formData, {
+      await axios.put(`http://cumple.ultrainf.com/api/usuarios/${usuariosId}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setSuccessMessage("Perfil actualizado correctamente");
