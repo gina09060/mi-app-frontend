@@ -324,7 +324,14 @@ function Register() {
             style={styles.input} 
           />
         </div>
-
+        <div style={styles.inputGroup}>
+          <input 
+            name="age" 
+            placeholder="Edad" 
+            onChange={handleChange} 
+            style={styles.input} 
+          />
+        </div>
         <div style={styles.inputGroup}>
           <FaMapMarkerAlt style={styles.icon} />
           <input 
